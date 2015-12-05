@@ -6,7 +6,7 @@
 *Reisen
 *Tour
 *Rechnung
-*Logout
+*Logout 
  */-->
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -18,12 +18,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <?php echo anchor('Home_Controller', $this->lang->line('page_name'), 'class="navbar-brand"'); ?>
+            <?php echo anchor('HomeController', $this->lang->line('page_name'), 'class="navbar-brand"'); ?>
         </div>
         <div class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav">
-                    <li><?php echo anchor('User_Controller', $this->lang->line('top_nav_users')); ?></li>
+                    <li><?php echo anchor('JourneyController', $this->lang->line('top_nav_tourmanagement')); ?></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

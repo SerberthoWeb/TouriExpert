@@ -20,12 +20,24 @@ class MY_Model extends CI_Model {
             $this->table_name = strtolower(get_class($this));
         }
     }
-    
-    public function get($id) {
+
+    public function create($data) {
+        $data['date_created'] = $data['date_updated'] = date('Y-m-d H:i:s');
+        $data['created_from_ip'] = $data['updated_from_ip'] = $this->input->ip_address();
+
+        $success = $this->db->insert($this->table_name, $data);
+        if ($success) {
+            return $this->db->insert_id();
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function read($id) {
         return $this->db->get_where($this->table_name, array($this->primary_key => $id))->row();
     }
-    
-    public function get_all($fields = '', $where = array(), $table = '', $limit = '', $order_by = '', $group_by = '') {
+
+    public function read_all($fields = '', $where = array(), $table = '', $limit = '', $order_by = '', $group_by = '') {
         $data = array();
         if ($fields != '') {
             $this->db->select($fields);
@@ -54,7 +66,7 @@ class MY_Model extends CI_Model {
         $Q = $this->db->get($this->table_name);
 
         if ($Q->num_rows() > 0) {
-            foreach ($Q->result_array() as $row) {
+            foreach ($Q->result_object() as $row) {
                 $data[] = $row;
             }
         }
@@ -62,19 +74,7 @@ class MY_Model extends CI_Model {
 
         return $data;
     }
-    
-    public function insert($data) {
-        $data['date_created'] = $data['date_updated'] = date('Y-m-d H:i:s');
-        $data['created_from_ip'] = $data['updated_from_ip'] = $this->input->ip_address();
 
-        $success = $this->db->insert($this->table_name, $data);
-        if ($success) {
-            return $this->db->insert_id();
-        } else {
-            return FALSE;
-        }
-    }
-    
     public function update($data, $id) {
         $data['date_updated'] = date('Y-m-d H:i:s');
         $data['updated_from_ip'] = $this->input->ip_address();
@@ -88,5 +88,7 @@ class MY_Model extends CI_Model {
 
         return $this->db->delete($this->table_name);
     }
+
 }
+
 ?>

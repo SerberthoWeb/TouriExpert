@@ -21,13 +21,6 @@ class UserController extends MY_Controller {
     // Lädt die View 
 
     public function index() {
-        $UserController = new UserController();
-        if($UserController->hasPermission($this->session->userdata('user'), 'HomeController/index')){
-            $data['site'] = 'Home_View';
-        } else {
-            $data['site'] = 'Login_View';
-        }
-        $this->load->view('common/SiteTemplate', $data);
     }
     
     public function hasPermission($user, $permission){

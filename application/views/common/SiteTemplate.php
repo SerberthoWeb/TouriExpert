@@ -33,8 +33,8 @@
         <div class="container theme-showcase" role="main">
             <!-- Beginn des Wrapper -->
             <div id="wrap" class="container">
-                <?php $this->load->view('common/Top_Nav'); ?>
-                <?php $this->load->view($site); ?>
+                <?php $this->load->view('common/TopNav'); ?>
+                <?php $this->load->view($wrappedView); ?>
             </div>
             <!-- Ende des Wrapper -->
         </div>

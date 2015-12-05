@@ -21,12 +21,7 @@ class HomeController extends MY_Controller {
     // Lädt die View 
 
     public function index() {
-        
-        if($this->auth->is_loggedin()){
-            $data['site'] = 'Home';
-        } else {
-            $data['site'] = 'user/UserLogin';
-        }
+        $data['wrappedView'] = "Home";
         $this->load->view('common/SiteTemplate', $data);
     }
 

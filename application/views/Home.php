@@ -1,7 +1,7 @@
 <!--/*
  * Lädt die Frontpage nach dem einloggen.
  */-->
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width:95%">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width:100%">
       
         <ol class="carousel-indicators">
             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
