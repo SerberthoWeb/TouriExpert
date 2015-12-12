@@ -1,19 +1,27 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
-
-    function __construct() {
+    
+    public function __construct() {
         parent::__construct();
-        $this->load->helper('form');
-        $this->load->helper('url');
-        $this->load->helper('language');
-        $this->lang->load('de_admin', 'deutsch');
+        $this->load->library('session');
     }
-}
+    
+    public function index() {
+        if (!$this->session->has_userdata('userId')) {
+            redirect('Login');
+        }
+    }
 
-?>
+    public function loggedInUser(){
+        $this->load->model('User_Model');
+        if ($this->session->has_userdata('userId')) {
+            return $this->User_Model->read($this->session->userdata('userId'));
+        } else {
+            return false;
+        }
+    }
+
+}
