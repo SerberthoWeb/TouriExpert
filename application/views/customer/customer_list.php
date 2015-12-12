@@ -38,20 +38,20 @@ $this->lang->load('customer');
             <table class="table table-hover table-condensed">
                 <thead>
                     <tr>
-                        <th class="col-md-1"><?= $this->lang->line('customer_id'); ?></th>
                         <th class="col-md-3"><?= $this->lang->line('customer_firstname'); ?></th>
                         <th class="col-md-3"><?= $this->lang->line('customer_lastname'); ?></th>
                         <th class="col-md-3"><?= $this->lang->line('customer_email'); ?></th>
+                        <th class="col-md-1"><?= $this->lang->line('customer_payment'); ?></th>
                         <th class="col-md-2"><?= $this->lang->line('customer_thead_action'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($customerList as $customer) : ?>
                         <tr>
-                            <td><?= $customer->getId(); ?></td>
                             <td><?= $customer->getFirstname(); ?></td>
                             <td><?= $customer->getLastname(); ?></td>
                             <td><?= $customer->getEmail(); ?></td>
+                            <td><?= $customer->getPayment(); ?></td>
                             <td>
                                 <div class="btn-toolbar " role="toolbar">
                                     <div class="btn-group" role="group">

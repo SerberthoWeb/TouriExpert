@@ -22,6 +22,18 @@ class Customer_Model extends Person_Model {
         }
     }
 
+    public function getCustomerId() {
+        return $this->payment;
+    }
+
+    public function getPayment() {
+        return $this->payment;
+    }
+ 
+    public function setPayment($payment) {
+        $this->name = $payment;
+    }
+
     public function read($id) {
         $this->db->select('*');
         $this->db->from($this->table_name);
@@ -51,7 +63,7 @@ class Customer_Model extends Person_Model {
         return $this->personId;
     }
 
-    public function getBookings() {
+    public function getBooking() {
         if ($this->bookdings == null) {
             $this->load->model('Booking_Model');
             $this->db->select('*');
@@ -59,9 +71,44 @@ class Customer_Model extends Person_Model {
             $this->db->where('bookings.customerId', $this->id);
             $Q = $this->db->get();
             $this->bookings = array();
-             
         }
         return $this->bookings;
+    }
+
+    public function createBooking($data) {
+        if ($this->bookdings == null) {
+            $this->load->model('Booking_Model');
+            $this->db->insert('bookings', $data);
+
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function update() {
+        $this->db->trans_start();
+        $Q = $this->db->query("UPDATE `customers`
+            JOIN `persons` ON `persons`.`personId` = `customers`.`personId` 
+            SET `persons`.`firstname` = ? 
+            WHERE `customers`.`customerId` = ?"
+                , array(
+            $this->firstname,
+            $this->id
+        ));
+        print_r( $this->firstname );
+        $this->db->trans_commit();
+        $this->db->trans_complete();
+        return $this;
+    }
+    
+    public function delete(){
+        $this->db->trans_start();
+        $this->db->where('persons.personId', $this->personId);
+        $affected = $this->db->delete('persons') + parent::_delete();
+        $this->db->trans_commit();
+        $this->db->trans_complete();
+        return $affected;
     }
 
 }

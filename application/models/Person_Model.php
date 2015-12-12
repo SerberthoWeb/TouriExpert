@@ -26,18 +26,40 @@ class Person_Model extends MY_Model {
     public function getId() {
         return $this->id;
     }
+    
+  
 
     public function getFirstname() {
         return $this->firstname;
+    }
+    
+     public function setFirstname($firstname){
+        $this->firstname = $firstname;
     }
     
     public function getLastname(){
         return $this->lastname;
     }
     
+      public function setLastname($lastname){
+        $this->name = $lastname;
+    }
     public function getEmail(){
         return $this->email;
     }
+    
+       public function setEmail($email){
+        $this->name = $email;
+    }
+    
+    public function update(){
+        $data['fistname'] = $this->firstname;
+        $data['lastname'] = $this->lastname;
+        $data['email'] = $this->email;
+        parent::_update($data, $this->id);
+        return $this;
+    }
+    
 }
 
 ?>

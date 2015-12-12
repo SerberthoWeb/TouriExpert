@@ -49,18 +49,7 @@ class Customer extends MY_Controller {
         $this->load->view('common/footer');
     }
 
-    public function edit($id) {
-        parent::index();
-        $this->load->model('Journey_Model');
-        $user = $this->loggedInUser();
-        $navdata['active'] = 'journey';
-        $navdata['user'] = $user;
-        $data['journey'] = $this->Journey_Model->read($id);
-        $this->load->view('common/header');
-        $this->load->view('common/navigation', $navdata);
-        $this->load->view('journey/journey_edit', $data);
-        $this->load->view('common/footer');
-    }
+ 
 
     public function delete($id, $commit = false) {
         parent::index();
@@ -88,6 +77,50 @@ class Customer extends MY_Controller {
         $this->load->view('common/footer');
     }
 
+    
+      public function addbooking($id) {
+          parent::index();
+        $this->load->model('Journey_Model');
+        $this->load->model('Booking_Model');
+        $user = $this->loggedInUser();
+        $navdata['active'] = 'journey';
+        $navdata['user'] = $user;
+        $viewdata = null;
+        $this->load->view('common/header');
+        $this->load->view('common/navigation', $navdata);
+        $this->load->view('booking/addbooking', $viewdata);
+        $this->load->view('common/footer');
+    }
+    
+      public function edit($id) {
+        parent::index();
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->load->model('Customer_Model');
+        $this->load->model('Person_Model');
+        //$this->form_validation->set_rules('txt_name', $this->lang->line('customer_name'), 'trim|required');
+        $customer = $this->Customer_Model->read($id);
+        if ($this->input->post('btn_save') == 'Save') {
+            $customer->setFirstname($this->input->post('txt_firstname'));
+            
+                echo 'update -> ' . $customer->getFirstname();
+                $customer = $customer->update();
+        }
+
+        $user = $this->loggedInUser();
+        $navdata['user'] = $user;
+        $navdata['active'] = 'customer';
+        $viewdata['customer'] = $customer;
+       
+       
+        $this->load->view('common/header');
+        $this->load->view('common/navigation', $navdata);
+        $this->load->view('customer/customer_edit', $viewdata);
+        $this->load->view('common/footer');
+    }
+    
+    
+    
 }
 
 ?>

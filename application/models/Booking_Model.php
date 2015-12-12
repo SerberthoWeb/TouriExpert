@@ -49,6 +49,21 @@ class Booking_Model extends MY_Model {
             
         }
     }
+    
+public function createBooking($data) {
+        if ($this->bookdings == null) {
+            $this->load->model('Booking_Model');
+            $this->db->insert('bookings', $data);      
+        
+         return $this->db->insert_id(); 
+    } else {     
+          return false;    
+
+} 
+   }
+    
+    
+    
 
 }
 

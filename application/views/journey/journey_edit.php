@@ -60,7 +60,7 @@ $this->lang->load('customer');
                     ));
                     ?>
                     <?=
-                    anchor('Journey/edit/' . $journey->getId()
+                    anchor($abordaction
                             , '<span class="glyphicon glyphicon-remove"></span>&nbsp;' . $this->lang->line('journey_action_cancel')
                             , array(
                         'class' => 'btn btn-default',
@@ -78,7 +78,7 @@ $this->lang->load('customer');
             <div class="row">
                 <div class="col-lg-6">
                     <?=
-                    anchor('Booking/add/journey' . $journey->getId()
+                    anchor('Journey/addBooking' . $journey->getId()
                             , '<span class="glyphicon glyphicon-plus"></span>&nbsp;' . $this->lang->line('journey_booking')
                             , array(
                         'class' => 'btn btn-default',

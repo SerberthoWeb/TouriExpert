@@ -21,7 +21,6 @@ class Journey_Model extends MY_Model {
 
     public function __construct($data = null) {
         parent::__construct('journeys', 'journeys.journeyId');
-        //$this->load->model("Destination_Model");
         $this->load->model("Booking_Model");
         if ($data != null) {
             $this->id = $data->journeyId;
@@ -100,7 +99,7 @@ class Journey_Model extends MY_Model {
      */
     public function getGuide() {
         if ($this->guide == null) {
-            $this->load->model("Guide_Model");
+            $this->load->model('Guide_Model');
             $this->guide = $this->Guide_Model->read($this->guideId);
         }
         return $this->guide;
@@ -182,14 +181,13 @@ class Journey_Model extends MY_Model {
         $data['destinationTxt'] = $this->destinationTxt;
         $data['guideId'] = $this->guide->getId();
         $data['description'] = $this->description;
-        parent::_update($data, $this->id);
-        return $this;
+        return parent::_update($data, $this->id);
     }
 
-    public function delete($id) {
+    public function delete() {
         $this->db->trans_start();
-        $this->db->where('journeyId', $id);
-        $affected = $this->db->delete('bookings') + parent::delete($id);
+        $this->db->where('journeyId', $this->id);
+        $affected = $this->db->delete('bookings') + parent::_delete($this->id);
         $this->db->trans_complete();
         return $affected;
     }

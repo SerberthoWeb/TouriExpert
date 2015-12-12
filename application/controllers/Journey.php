@@ -65,7 +65,7 @@ class Journey extends MY_Controller {
             $journey->setGuide($this->Guide_Model->read($this->input->post('drp_guide')));
             $journey->setDescription($this->input->post('txt_description'));
             if ($this->form_validation->run()) {
-                $journey = $journey->update();
+                $journey->update();
             }
         }
 
@@ -77,6 +77,12 @@ class Journey extends MY_Controller {
         $guides = $this->Guide_Model->read_all();
         foreach ($guides as $guide) {
             $viewdata['guideSelection'][$guide->getId()] = $guide->getFirstname() . '&nbsp;' . $guide->getLastname();
+        }
+        if ($this->session->flashdata('abordaction')) {
+            $this->session->keep_flashdata('abordaction');
+            $viewdata['abordaction'] = $this->session->flashdata('abordaction');
+        } else {
+            $viewdata['abordaction'] = "Welcome";
         }
         $this->load->view('common/header');
         $this->load->view('common/navigation', $navdata);
@@ -94,8 +100,9 @@ class Journey extends MY_Controller {
         $navdata['active'] = 'journey';
         $this->load->view('common/header');
         $this->load->view('common/navigation', $navdata);
+        $journey = $this->Journey_Model->read($id);
         if ($commit) {
-            $journey = $this->Journey_Model->delete($id);
+            $journey->delete();
             $this->load->view('journey/journey_delete_commit');
         } else {
             $viewdata['journey'] = $this->Journey_Model->read($id);
@@ -107,6 +114,20 @@ class Journey extends MY_Controller {
             }
             $this->load->view('journey/journey_delete', $viewdata);
         }
+        $this->load->view('common/footer');
+    }
+
+    public function addbooking($id) {
+        parent::index();
+        $this->load->model('Journey_Model');
+        $this->load->model('Booking_Model');
+        $user = $this->loggedInUser();
+        $navdata['active'] = 'journey';
+        $navdata['user'] = $user;
+        $viewdata = null;
+        $this->load->view('common/header');
+        $this->load->view('common/navigation', $navdata);
+        $this->load->view('booking/addbooking', $viewdata);
         $this->load->view('common/footer');
     }
 
